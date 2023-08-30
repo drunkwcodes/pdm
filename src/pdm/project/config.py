@@ -253,8 +253,16 @@ class Config(MutableMapping[str, str]):
         self.is_global = is_global
         if config_file is None:
             root = find_project_root()
+<<<<<<< HEAD
             config_file = root / "pdm.toml"  # reference: project/core.py L135: Config(self.root / "pdm.toml")
         self.config_file = config_file.resolve()
+=======
+            # reference: project/core.py L135: Config(self.root / "pdm.toml")
+            config_file_path = Path(cast(os.PathLike, root)) / "pdm.toml"
+            self.config_file = config_file_path.resolve()
+        else:
+            self.config_file = Path(config_file).resolve()
+>>>>>>> fbdb8bc1fa6567af9764c52545c19df9966ae0e5
         self.deprecated = {v.replace: k for k, v in self._config_map.items() if v.replace}
         self._file_data = load_config(self.config_file)
         self._data = collections.ChainMap(
